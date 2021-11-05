@@ -55,17 +55,39 @@
                     placeholder="URL de tu usuario de twitter">
                 </div>
 
-                <button type="submit" class="btn-primary btn">Crear usuario</button>
+                <div class="form-group">
+                <label for="profession_id">Profesión</label>
+                <select name="profession_id" id="profession_id" class="form-control">
+                    <option value="">Selecciona una opción</option>
+                   @foreach($professions as $profession)
+                        <option value="{{ $profession->id }}"
+                        {{ old('profession_id') == $profession->id ? 'selected' : '' }}
+                        >{{ $profession->title }}</option>
+                    @endforeach
+                </select>
+                </div>
+
+                <h5>Habilidades</h5>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox1">1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                    <label class="form-check-label" for="inlineCheckbox2">2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+                    <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn-primary btn">Crear usuario</button>
+                    <a href="{{ route('users.index') }}" class="btn btn-link">Regresar al listado de usuarios</a>
+                </div>
             </form>
 
         </div>
-
-    <div class="card-footer footer">
-        <p>
-
-            <a href="{{ route('users.index') }}">Regresar al listado de usuarios</a>
-
-        </p>
-    </div>
 
 @endsection

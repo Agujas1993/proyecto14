@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'profession_id'
+        'name', 'email', 'password'
     ];
 
     /**
@@ -54,13 +54,13 @@ class User extends Authenticatable
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => bcrypt($data['password']),
-                'profession_id' => $data['profession_id'] ?? null
+                'password' => bcrypt($data['password'])
             ]);
 
             $user->profile()->create([
                 'bio' => $data['bio'],
-                'twitter' => $data['twitter'] ?? null,
+                'twitter' => $data['twitter'],
+                'profession_id' => $data['profession_id']
             ]);
         });
     }

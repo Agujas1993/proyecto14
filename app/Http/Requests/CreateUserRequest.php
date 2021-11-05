@@ -30,8 +30,10 @@ class CreateUserRequest extends FormRequest
             'email' => 'required|email|unique:users,email|regex:/(.+)@(.+)\.(.+)/i',
             'password' => 'required|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
             'bio' => 'required',
-            'twitter' => 'nullable|url',
-            'profession_id' => Rule::exists('professions', 'id')->whereNull('deleted_at'),
+            'twitter' => 'nullable|present|url',
+            'profession_id' => [
+                'nullable', 'present',
+                Rule::exists('professions', 'id')->whereNull('deleted_at')],
         ];
     }
 

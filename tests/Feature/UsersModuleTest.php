@@ -270,11 +270,11 @@ class UsersModuleTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->from('usuarios/' . $user->id . '/editar')
-            ->put('usuarios/' . $user->id, [
+            ->put('usuarios/' . $user->id, $this->getValidData([
                 'name' => 'Pepe',
                 'email' => '',
-                'password' => '123456'
-            ])->assertRedirect('usuarios/' . $user->id . '/editar');
+                'password' => '123456*Sa'
+            ]))->assertRedirect('usuarios/' . $user->id . '/editar');
 
         $this->assertDatabaseMissing('users', ['name' => 'Pepe']);
     }
@@ -285,11 +285,11 @@ class UsersModuleTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->from('usuarios/' . $user->id . '/editar')
-            ->put('usuarios/' . $user->id, [
+            ->put('usuarios/' . $user->id, $this->getValidData([
                 'name' => 'Pepe',
                 'email' => 'correo-no-valido',
-                'password' => '123456'
-            ])->assertRedirect('usuarios/' . $user->id . '/editar')
+                'password' => '123456*Sa'
+            ]))->assertRedirect('usuarios/' . $user->id . '/editar')
             ->assertSessionHasErrors('email');
 
         $this->assertDatabaseMissing('users', ['name' => 'Pepe']);
@@ -306,11 +306,11 @@ class UsersModuleTest extends TestCase
             'email' => 'pepe@mail.es',
 ]);
         $this->from('usuarios/' . $user->id . '/editar')
-            ->put('usuarios/' . $user->id, [
+            ->put('usuarios/' . $user->id, $this->getValidData([
                 'name' => 'Pepe',
                 'email' => 'existing_email@mail.es',
-                'password' => '123456'
-            ])->assertRedirect('usuarios/' . $user->id . '/editar')
+                'password' => '123456*Sa'
+            ]))->assertRedirect('usuarios/' . $user->id . '/editar')
             ->assertSessionHasErrors('email');
     }
     /** @test */
@@ -323,11 +323,11 @@ class UsersModuleTest extends TestCase
             'password' => bcrypt($oldPassword)
         ]);
         $this->from('usuarios/' . $user->id . '/editar')
-            ->put('usuarios/' . $user->id, [
+            ->put('usuarios/' . $user->id, $this->getValidData([
                 'name' => 'Pepe',
                 'email' => 'pepe@mail.es',
                 'password' => ''
-            ])->assertRedirect('usuarios/' . $user->id);
+            ]))->assertRedirect('usuarios/' . $user->id);
 
         $this->assertCredentials([
             'name' => 'Pepe',
@@ -346,11 +346,11 @@ class UsersModuleTest extends TestCase
         ]);
 
         $this->from('usuarios/' . $user->id . '/editar')
-            ->put('usuarios/' . $user->id, [
+            ->put('usuarios/' . $user->id, $this->getValidData([
                 'name' => 'Pepe',
                 'email' => 'pepe@mail.es',
-                'password' => '123456'
-            ])->assertRedirect('usuarios/' . $user->id);
+                'password' => '123456*Sa'
+            ]))->assertRedirect('usuarios/' . $user->id);
 
         $this->assertDatabaseHas('users',[
             'name' => 'Pepe',
